@@ -1,0 +1,61 @@
+# USB CDC RX
+dim rx_return_code
+dim rx_return_data_size
+dim rx_return_data(8) 
+
+# characteristic value (2-byte array)
+dim measure_buf(2)  
+
+# Boot event listener
+event system_boot(major, minor, patch, build, ll_version, protocol_version, hw)
+	
+    measure_buf(0:1) = 0    # flags byte
+    measure_buf(1:1) = 0    # measurement byte
+
+    call system_endpoint_set_watermarks(3, 1, 0)
+   
+    call gap_set_adv_parameters(32, 48, 7)
+
+    call gap_set_mode(gap_general_discoverable, gap_undirected_connectable)
+
+    call gap_set_scan_parameters($c8, $c8, 0)
+end
+
+event connection_status(connection, flags, address, address_type, conn_interval, timeout, latency, bonding)
+    if flags & $05 then
+		call gap_discover(gap_discover_generic)
+    end if
+end
+
+event gap_scan_response(rssi, packet_type, sender, address_type, bond, data_len, data_data)
+	
+	if packet_type = 2 then
+	
+		if data_data(10:1) = 68 && data_data(9:1) = 68 && data_data(24:1) = 68 then
+
+			# update heart characteristic 
+			measure_buf(1:1) = $100 - rssi
+			
+			# write heart rate characteristic
+			call attributes_write(c_heart_rate_measurement, 0, 2, measure_buf(0:2))
+			
+			return
+		end if
+    end if
+	
+end
+
+event connection_disconnected(handle, result)
+    call gap_set_adv_parameters(32, 48, 7)
+    call gap_set_mode(gap_general_discoverable, gap_undirected_connectable)
+	call gap_discover(gap_discover_generic)
+end  
+
+
+# listen to USB CDC and reboot into DFU when ASCII '0' is received
+event system_endpoint_watermark_rx(endpoint, size)
+    call system_endpoint_rx(endpoint, size)(rx_return_code, rx_return_data_size, rx_return_data(0:rx_return_data_size))
+    if rx_return_data(0:1) = $30 then
+        call system_reset(1)
+    end if
+end
