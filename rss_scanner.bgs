@@ -34,12 +34,12 @@ event gap_scan_response(rssi, packet_type, sender, address_type, bond, data_len,
 		if data_data(10:1) = 68 && data_data(9:1) = 68 && data_data(24:1) = 68 then
 
 			# update heart characteristic 
+			measure_buf(0:1) = data_data(26:1)
 			measure_buf(1:1) = $100 - rssi
 			
 			# write heart rate characteristic
 			call attributes_write(c_heart_rate_measurement, 0, 2, measure_buf(0:2))
 			
-			return
 		end if
     end if
 	
