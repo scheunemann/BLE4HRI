@@ -4,13 +4,14 @@ dim rx_return_data_size
 dim rx_return_data(8) 
 
 # characteristic value (2-byte array)
-dim measure_buf(2)  
+dim measure_buf(3) 
 
 # Boot event listener
 event system_boot(major, minor, patch, build, ll_version, protocol_version, hw)
 	
-    measure_buf(0:1) = 0    # flags byte
-    measure_buf(1:1) = 0    # measurement byte
+    measure_buf(0:2) = 0    # beacon ID
+    measure_buf(1:2) = 0    # location ID
+	measure_buf(2:2) = 0    # RSS measurement
 
     call system_endpoint_set_watermarks(3, 1, 0)
    
@@ -31,14 +32,15 @@ event gap_scan_response(rssi, packet_type, sender, address_type, bond, data_len,
 	
 	if packet_type = 2 then
 	
-		if data_data(10:1) = 68 && data_data(9:1) = 68 && data_data(24:1) = 68 then
+		if data_data(10:1) = $44 && data_data(9:1) = $44 && data_data(24:1) = $44 then
 
-			# update heart characteristic 
-			measure_buf(0:1) = data_data(26:1)
-			measure_buf(1:1) = $100 - rssi
+			# update characteristic 
+			measure_buf(0:2) = data_data(26:1)    	# beacon ID
+			measure_buf(1:2) = 0    				# location ID
+			measure_buf(2:2) = $100 - rssi    		# RSS measurement
 			
-			# write heart rate characteristic
-			call attributes_write(c_heart_rate_measurement, 0, 2, measure_buf(0:2))
+			# write charachteristc
+			call attributes_write(c_beacons_rss, 0, 3, measure_buf(0:3))	
 			
 		end if
     end if
