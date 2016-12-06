@@ -26,3 +26,6 @@ Example configuration:
 ## ToDo ##
 - use a custom characteristic rather then exploit the heart rate
 - comment the script
+
+## License ##
+This project is licensed under the terms of the MIT license.
