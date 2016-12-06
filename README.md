@@ -24,7 +24,6 @@ Example configuration:
 [BGScript Scripting Language](https://www.silabs.com/Support%20Documents/RegisteredDocs/UG209.pdf)
 
 ## ToDo ##
-- use a custom characteristic rather then exploit the heart rate
 - comment the script
 
 ## License ##
