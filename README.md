@@ -3,7 +3,7 @@
 ## Gimbal (beacons) ##
 We used Gimbal simply because they are affordable and small. Any other iBeacon will be acceptable. 
 
-We do not use the GimbalBeacon protocol since the UUID get changed each start up.
+We do not use the Gimbal Beacon protocol since the UUID get changed each start up.
 
 Example configuration:
 
