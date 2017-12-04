@@ -19,6 +19,7 @@ event system_boot(major, minor, patch, build, ll_version, protocol_version, hw)
 
     call gap_set_mode(gap_general_discoverable, gap_undirected_connectable)
 
+    # call gap_set_scan_parameters(scan_interval, scan_window, active)(result)
     call gap_set_scan_parameters($c8, $c8, 0)
 end
 
