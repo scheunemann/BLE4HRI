@@ -30,7 +30,7 @@ Example configuration:
 M. M. Scheunemann, K. Dautenhahn, M. Salem and B. Robins, "Utilizing Bluetooth Low Energy to recognize proximity, touch and humans," In *2016 25th IEEE International Symposium on Robot and Human Interactive Communication (RO-MAN)*, pages 362--367, IEEE, New York, NY, 2016.
 https://doi.org/10.1109/ROMAN.2016.7745156
 
-keywords: {recognize proximity;humans;human inhabited environment;adaptive behavior;cost intensive task;inexpensive bluetooth low energy;BLE devices;configurable technique;noisy laboratory setting;mobile spherical robots;proximity information;touch sensor;raw received signal strength;RSS;sensor system;human-robot interaction;HRI experiments;Bluetooth;Cameras;Robot vision systems;Mobile robots;Tactile sensors}
+keywords: {recognize proximity; humans; human inhabited environment; adaptive behavior; cost intensive task; inexpensive bluetooth low energy; BLE devices; configurable technique; noisy laboratory setting; mobile spherical robots; proximity information; touch sensor; raw received signal strength; RSS;sensor system; human-robot interaction; HRI experiments; Bluetooth; Cameras; Robot vision systems; Mobile robots; Tactile sensors}
 
 
 ## License ##
